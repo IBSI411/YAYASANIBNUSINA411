@@ -514,7 +514,7 @@
                             <h4 class="text-xl md:text-2xl font-bold text-islamic-green mb-2"><i class="fa-solid fa-clipboard-user mr-2"></i> Formulir Pendaftaran</h4>
                             <p class="text-gray-600 mb-5 md:mb-6 text-xs md:text-sm">Isi data di bawah ini, konfirmasi akan otomatis dikirimkan ke admin via WhatsApp.</p>
                             
-                            <form id="form-kiash" onsubmit="submitKiashForm(event)" class="space-y-4 md:space-y-5">
+                            <form id="form-kiash" onsubmit="event.preventDefault()" class="space-y-4 md:space-y-5">
                                 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                                     <div>
@@ -549,9 +549,15 @@
                                     </label>
                                 </div>
                                 
-                                <button type="submit" class="w-full mt-4 md:mt-6 bg-islamic-gold text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold hover:bg-yellow-600 shadow-lg transition-all transform hover:-translate-y-1 text-base md:text-lg flex items-center justify-center gap-2 md:gap-3">
-                                    <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> Daftar via WhatsApp
-                                </button>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-4 md:mt-6">
+                                    <button type="button" onclick="submitKiashForm('6285801565137')" class="w-full bg-islamic-gold text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold hover:bg-yellow-600 shadow-lg transition-all transform hover:-translate-y-1 text-base md:text-lg flex items-center justify-center gap-2 md:gap-3">
+                                        <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> Daftar via WhatsApp
+                                    </button>
+                                    
+                                    <button type="button" onclick="submitKiashForm('628568934905')" class="w-full bg-islamic-gold text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold hover:bg-yellow-600 shadow-lg transition-all transform hover:-translate-y-1 text-base md:text-lg flex items-center justify-center gap-2 md:gap-3">
+                                        <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> Daftar via WhatsApp
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -650,10 +656,16 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <!-- Judul -->
                 <div class="text-center mb-10 md:mb-16">
-                    <i class="fa-solid fa-hand-holding-dollar text-5xl md:text-6xl text-islamic-gold mb-4 md:mb-6"></i>
+                    <img src="kiash.png" alt="Logo KIASH" class="w-24 md:w-32 h-auto mx-auto mb-4 md:mb-6">
                     <h1 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4 md:mb-6">Kotak Amal</h1>
                     <p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto px-2">
-                        Salurkan Infaq, Amaliah, dan Shodaqoh Anda (Program KIASH Rp 30.000/Bulan) melalui rekening resmi Yayasan Ibnu Sina 411.
+                        Salurkan Infaq, Amaliah, dan Shodaqoh Anda melalui rekening resmi Yayasan Ibnu Sina 411.
+					<p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto px-2">	
+						وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ
+					<p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto px-2">	
+					"Sedekah dapat menghapus dosa sebagaimana air memadamkan api."
+					<p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto px-2">				
+						(HR. Tirmidzi, no. 2616)
                     </p>
                 </div>
 
@@ -685,7 +697,7 @@
                                 <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-xs md:text-sm">
                                     Agar pencatatan amanah berjalan tertib, mohon konfirmasi donasi atau pendaftaran iuran wajib KIASH Anda melalui pesan WhatsApp.
                                 </p>
-                                <a href="https://wa.me/6285801565137" target="_blank" class="w-full bg-green-500 text-white font-bold py-3 px-4 md:px-6 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-green-600 transition-colors shadow-md text-center text-sm md:text-base">
+                                <a href="https://wa.me/6281234567890" target="_blank" class="w-full bg-green-500 text-white font-bold py-3 px-4 md:px-6 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-green-600 transition-colors shadow-md text-center text-sm md:text-base">
                                     <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> Konfirmasi ke Admin
                                 </a>
                             </div>
@@ -822,9 +834,15 @@
         }
 
         // Fungsi Submit Form KIASH ke WhatsApp
-        function submitKiashForm(event) {
-            event.preventDefault(); // Mencegah form reload page
-            
+        function submitKiashForm(targetPhone) {
+            const form = document.getElementById('form-kiash');
+
+            // Cek apakah form sudah diisi dengan benar (Validasi form HTML5)
+            if (!form.checkValidity()) {
+                form.reportValidity(); // Memunculkan peringatan jika ada kolom wajib yang kosong
+                return;
+            }
+
             const nama = document.getElementById('nama_kiash').value;
             const panggilan = document.getElementById('panggilan_kiash').value;
             const ktp = document.getElementById('ktp_kiash').value;
@@ -834,10 +852,7 @@
             // Format teks WhatsApp
             const message = `*PENDAFTARAN ANGGOTA IBSI KIASH*%0A%0A﷽%0AAssalamu'alaikum Warahmatullahi Wabarakatuh.%0A%0ASaya yang mendaftar di bawah ini:%0A*Nama Lengkap:* ${nama}%0A*Nama Panggilan:* ${panggilan}%0A*No. KTP (NIK):* ${ktp}%0A*No. WA:* ${wa}%0A*Alamat:* ${alamat}%0A%0ATelah membaca, memahami, dan menyetujui seluruh ketentuan AKAD KEANGGOTAAN IBSI KIASH. Bersama ini saya siap menjadi anggota.%0A%0ATerima kasih.%0AWassalamu'alaikum.`;
             
-            // Nomor Tujuan (Format Internasional tanpa tanda +)
-            const targetPhone = "6285801565137";
-            
-            // Buka Tab WhatsApp
+            // Buka Tab WhatsApp menggunakan parameter targetPhone
             window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
         }
 

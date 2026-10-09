@@ -849,8 +849,26 @@
             const wa = document.getElementById('wa_kiash').value;
             const alamat = document.getElementById('alamat_kiash').value;
             
-            // Format teks WhatsApp
-            const message = `*PENDAFTARAN ANGGOTA IBSI KIASH*%0A%0A﷽%0AAssalamu'alaikum Warahmatullahi Wabarakatuh.%0A%0ASaya yang mendaftar di bawah ini:%0A*Nama Lengkap:* ${nama}%0A*Nama Panggilan:* ${panggilan}%0A*No. KTP (NIK):* ${ktp}%0A*No. WA:* ${wa}%0A*Alamat:* ${alamat}%0A%0ATelah membaca, memahami, dan menyetujui seluruh ketentuan AKAD KEANGGOTAAN IBSI KIASH. Bersama ini saya siap menjadi anggota.%0A%0ATerima kasih.%0AWassalamu'alaikum.`;
+            // Format teks WhatsApp yang lebih rapi (bisa langsung di-enter seperti ngetik biasa)
+            const textPesan = `*PENDAFTARAN ANGGOTA IBSI KIASH*
+
+بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
+
+Saya yang mendaftar di bawah ini:
+*Nama Lengkap:* ${nama}
+*Nama Panggilan:* ${panggilan}
+*No. KTP (NIK):* ${ktp}
+*No. WA:* ${wa}
+*Alamat:* ${alamat}
+
+Telah membaca, memahami, dan menyetujui seluruh ketentuan AKAD KEANGGOTAAN IBSI KIASH. Bersama ini saya siap menjadi anggota.
+
+Terima kasih.
+Wassalamu'alaikum.`;
+
+            // encodeURIComponent memastikan tulisan Arab dan spasi aman tidak berantakan di WhatsApp
+            const message = encodeURIComponent(textPesan);
             
             // Buka Tab WhatsApp menggunakan parameter targetPhone
             window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
